@@ -50,6 +50,43 @@ class _MyAppState extends State<MyApp> {
                 _pickPhoto(PhotoPickerOptions());
               },
             ),
+            _Tile(
+              title: '选择单图',
+              onTap: () {
+                _pickPhoto(PhotoPickerOptions()..maxAssetsCount = 1);
+              },
+            ),
+            _Tile(
+              title: '选择单图并编辑',
+              onTap: () {
+                _pickPhoto(PhotoPickerOptions()
+                  ..maxAssetsCount = 1
+                  ..singleJumpEdit = true);
+              },
+            ),
+            _Tile(
+              title: '选择圆形头像',
+              onTap: () {
+                _pickPhoto(
+                  PhotoPickerOptions()
+                    ..maxAssetsCount = 1
+                    ..singleJumpEdit = true
+                    ..isRoundCliping = true,
+                );
+              },
+            ),
+            _Tile(
+              title: '选择视频',
+              onTap: () {
+                _pickPhoto(PhotoPickerOptions()..type = 1);
+              },
+            ),
+            _Tile(
+              title: '最新资源在前',
+              onTap: () {
+                _pickPhoto(PhotoPickerOptions()..reverseDate = true);
+              },
+            ),
           ],
         ),
       ),
