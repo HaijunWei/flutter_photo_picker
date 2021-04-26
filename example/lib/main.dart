@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:photo_picker/photo_picker.dart';
@@ -19,6 +21,9 @@ class _MyAppState extends State<MyApp> {
     final picker = PhotoPicker();
     final result = await picker.pickPhoto(options);
     final assets = result.assets;
+
+    _assets.map((e) => print("============================${e.filePath}"));
+
     if (assets == null || assets.isEmpty) return;
     _assets = assets as List<PhotoAsset>;
     setState(() {});

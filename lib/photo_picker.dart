@@ -38,7 +38,7 @@ class PhotoPickerOptions {
   /// 是否允许在相册打开相机
   bool? allowOpenCamera;
 
-  /// 是否允许旋转Gif
+  /// 是否加载Gif
   bool? allowGif;
 
   int? videoMaximumDuration;
