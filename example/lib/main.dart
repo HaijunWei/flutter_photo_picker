@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:photo_picker/photo_picker.dart';
@@ -35,8 +36,8 @@ class _MyAppState extends State<MyApp> {
             Wrap(
               children: _assets
                   .map(
-                    (e) => Image.asset(
-                      e.filePath ?? '',
+                    (e) => Image.file(
+                      File(e.filePath ?? ''),
                       fit: BoxFit.cover,
                       width: 100,
                       height: 100,
@@ -79,12 +80,6 @@ class _MyAppState extends State<MyApp> {
               title: '选择视频',
               onTap: () {
                 _pickPhoto(PhotoPickerOptions()..type = 1);
-              },
-            ),
-            _Tile(
-              title: '最新资源在前',
-              onTap: () {
-                _pickPhoto(PhotoPickerOptions()..reverseDate = true);
               },
             ),
           ],

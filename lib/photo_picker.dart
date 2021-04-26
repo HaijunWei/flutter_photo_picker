@@ -7,62 +7,58 @@ import 'dart:typed_data' show Uint8List, Int32List, Int64List, Float64List;
 
 import 'package:flutter/services.dart';
 
-class PhotoPickerResult {
-  List<Object?>? assets;
-
-  Object encode() {
-    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['assets'] = assets?.map((e) => (e as PhotoAsset).encode());
-    return pigeonMap;
-  }
-
-  static PhotoPickerResult decode(Object message) {
-    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return PhotoPickerResult()
-      ..assets = (pigeonMap['assets'] as List<Object?>?)
-          ?.map((e) => PhotoAsset.decode(e!))
-          .toList();
-  }
-}
-
-class PhotoAsset {
-  String? filePath;
-
-  Object encode() {
-    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['filePath'] = filePath;
-    return pigeonMap;
-  }
-
-  static PhotoAsset decode(Object message) {
-    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return PhotoAsset()..filePath = pigeonMap['filePath'] as String?;
-  }
-
-  @override
-  String toString() => 'PhotoAsset(filePath: $filePath)';
-}
-
 class PhotoPickerOptions {
+  /// 选择照片类型，0 = 图片，1 = 视频，2 = 混合
   int? type;
+
+  /// 可选资源最大数
   int? maxAssetsCount;
+
+  /// 是否可以编辑资源
   bool? allowEdit;
+
+  /// 编辑 - 单选模式下选择图片时是否直接跳转到编辑界面
+  bool? singleJumpEdit;
+
+  /// 编辑 - 是否使用圆形剪裁
+  bool? isRoundCliping;
+
+  /// 编辑 - 是否支持旋转
+  bool? supportRotation;
+
+  /// 编辑 - 自定义剪裁比例，宽度
+  int? photoEditCustomRatioW;
+
+  /// 编辑 - 自定义剪裁比例，高度
+  int? photoEditCustomRatioH;
+
+  /// 列表每行显示个数
+  int? imageSpanCount;
+
+  /// 是否允许在相册打开相机
+  bool? allowOpenCamera;
+
+  /// 是否允许旋转Gif
+  bool? allowGif;
+
   int? videoMaximumDuration;
   int? videoMinimumDuration;
-  bool? singleJumpEdit;
-  bool? isRoundCliping;
-  bool? reverseDate;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['type'] = type;
     pigeonMap['maxAssetsCount'] = maxAssetsCount;
     pigeonMap['allowEdit'] = allowEdit;
-    pigeonMap['videoMaximumDuration'] = videoMaximumDuration;
-    pigeonMap['videoMinimumDuration'] = videoMinimumDuration;
     pigeonMap['singleJumpEdit'] = singleJumpEdit;
     pigeonMap['isRoundCliping'] = isRoundCliping;
-    pigeonMap['reverseDate'] = reverseDate;
+    pigeonMap['supportRotation'] = supportRotation;
+    pigeonMap['photoEditCustomRatioW'] = photoEditCustomRatioW;
+    pigeonMap['photoEditCustomRatioH'] = photoEditCustomRatioH;
+    pigeonMap['imageSpanCount'] = imageSpanCount;
+    pigeonMap['allowOpenCamera'] = allowOpenCamera;
+    pigeonMap['allowGif'] = allowGif;
+    pigeonMap['videoMaximumDuration'] = videoMaximumDuration;
+    pigeonMap['videoMinimumDuration'] = videoMinimumDuration;
     return pigeonMap;
   }
 
@@ -72,11 +68,16 @@ class PhotoPickerOptions {
       ..type = pigeonMap['type'] as int?
       ..maxAssetsCount = pigeonMap['maxAssetsCount'] as int?
       ..allowEdit = pigeonMap['allowEdit'] as bool?
-      ..videoMaximumDuration = pigeonMap['videoMaximumDuration'] as int?
-      ..videoMinimumDuration = pigeonMap['videoMinimumDuration'] as int?
       ..singleJumpEdit = pigeonMap['singleJumpEdit'] as bool?
       ..isRoundCliping = pigeonMap['isRoundCliping'] as bool?
-      ..reverseDate = pigeonMap['reverseDate'] as bool?;
+      ..supportRotation = pigeonMap['supportRotation'] as bool?
+      ..photoEditCustomRatioW = pigeonMap['photoEditCustomRatioW'] as int?
+      ..photoEditCustomRatioH = pigeonMap['photoEditCustomRatioH'] as int?
+      ..imageSpanCount = pigeonMap['imageSpanCount'] as int?
+      ..allowOpenCamera = pigeonMap['allowOpenCamera'] as bool?
+      ..allowGif = pigeonMap['allowGif'] as bool?
+      ..videoMinimumDuration = pigeonMap['videoMinimumDuration'] as int?
+      ..videoMaximumDuration = pigeonMap['videoMaximumDuration'] as int?;
   }
 }
 
@@ -115,4 +116,40 @@ class PhotoPicker {
       return PhotoPickerResult.decode(replyMap['result']!);
     }
   }
+}
+
+class PhotoPickerResult {
+  List<Object?>? assets;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['assets'] = assets?.map((e) => (e as PhotoAsset).encode());
+    return pigeonMap;
+  }
+
+  static PhotoPickerResult decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return PhotoPickerResult()
+      ..assets = (pigeonMap['assets'] as List<Object?>?)
+          ?.map((e) => PhotoAsset.decode(e!))
+          .toList();
+  }
+}
+
+class PhotoAsset {
+  String? filePath;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['filePath'] = filePath;
+    return pigeonMap;
+  }
+
+  static PhotoAsset decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return PhotoAsset()..filePath = pigeonMap['filePath'] as String?;
+  }
+
+  @override
+  String toString() => 'PhotoAsset(filePath: $filePath)';
 }
