@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) NSArray * assets;
 @end
 
+@interface HJPhotoAsset : NSObject
+@property(nonatomic, copy, nullable) NSString *filePath;
+@end
+
 @interface HJPhotoPickerOptions : NSObject
 @property(nonatomic, strong, nullable) NSNumber * type;
 @property(nonatomic, strong, nullable) NSNumber * maxAssetsCount;

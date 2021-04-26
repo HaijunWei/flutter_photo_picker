@@ -26,6 +26,12 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 +(HJPhotoPickerResult*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
 @end
+
+@interface HJPhotoAsset ()
++(HJPhotoAsset*)fromMap:(NSDictionary*)dict;
+-(NSDictionary*)toMap;
+@end
+
 @interface HJPhotoPickerOptions ()
 +(HJPhotoPickerOptions*)fromMap:(NSDictionary*)dict;
 -(NSDictionary*)toMap;
@@ -35,14 +41,38 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 +(HJPhotoPickerResult*)fromMap:(NSDictionary*)dict {
   HJPhotoPickerResult* result = [[HJPhotoPickerResult alloc] init];
   result.assets = dict[@"assets"];
-  if ((NSNull *)result.assets == [NSNull null]) {
-    result.assets = nil;
-  }
+    if ((NSNull *)result.assets == [NSNull null]) {
+        NSMutableArray *assets = [NSMutableArray new];
+        [dict[@"assets"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [assets addObject:[HJPhotoAsset fromMap:obj]];
+        }];
+        result.assets = assets;
+    } else {
+        result.assets = nil;
+    }
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.assets ? self.assets : [NSNull null]), @"assets", nil];
+    NSMutableArray *assets = [NSMutableArray new];
+    [self.assets enumerateObjectsUsingBlock:^(HJPhotoAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [assets addObject:[obj toMap]];
+    }];
+    return @{ @"assets": assets };
 }
+@end
+
+@implementation HJPhotoAsset
++ (HJPhotoAsset *)fromMap:(NSDictionary *)dict {
+    HJPhotoAsset *result = [HJPhotoAsset new];
+    result.filePath = dict[@"filePath"];
+    return result;
+}
+- (NSDictionary *)toMap {
+    return @{
+        @"filePath": self.filePath ?: [NSNull null]
+    };
+}
+
 @end
 
 @implementation HJPhotoPickerOptions

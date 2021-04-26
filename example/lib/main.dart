@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:photo_picker/photo_picker.dart';
 
 void main() {
@@ -14,32 +12,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  List<PhotoAsset> _assets = [];
 
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await PhotoPicker.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+  void _pickPhoto(PhotoPickerOptions options) async {
+    final picker = PhotoPicker();
+    final result = await picker.pickPhoto(options);
+    final assets = result.assets;
+    if (assets == null || assets.isEmpty) return;
+    _assets = assets as List<PhotoAsset>;
+    setState(() {});
   }
 
   @override
@@ -47,10 +28,60 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('PhotoPicker'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: ListView(
+          children: [
+            Wrap(
+              children: _assets
+                  .map(
+                    (e) => Image.asset(
+                      e.filePath ?? '',
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                    ),
+                  )
+                  .toList(),
+            ),
+            _Tile(
+              title: '打开相册',
+              onTap: () {
+                _pickPhoto(PhotoPickerOptions());
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({
+    Key? key,
+    required this.title,
+    this.onTap,
+  }) : super(key: key);
+
+  final String title;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onTap,
+      child: Container(
+        height: 40,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Expanded(child: Text(title)),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 15,
+            ),
+          ],
         ),
       ),
     );
