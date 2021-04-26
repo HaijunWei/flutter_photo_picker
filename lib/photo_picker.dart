@@ -36,7 +36,6 @@ class PhotoAsset {
 
   static PhotoAsset decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    print(pigeonMap);
     return PhotoAsset()..filePath = pigeonMap['filePath'] as String?;
   }
 
