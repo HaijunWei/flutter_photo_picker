@@ -1,6 +1,5 @@
 package com.haijunwei.photo_picker.bean
 
-import com.haijunwei.photo_picker.Messages.PhotoPickerResult
 import java.util.*
 
 /**
