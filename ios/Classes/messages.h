@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HJPhotoPicker
 -(void)pickPhoto:(nullable HJPhotoPickerOptions *)input completion:(void(^)(HJPhotoPickerResult *_Nullable, FlutterError *_Nullable))completion;
+-(void)pickPhotoFromCamera:(nullable HJPhotoPickerOptions *)input completion:(void(^)(HJPhotoPickerResult *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void HJPhotoPickerSetup(id<FlutterBinaryMessenger> binaryMessenger, id<HJPhotoPicker> _Nullable api);

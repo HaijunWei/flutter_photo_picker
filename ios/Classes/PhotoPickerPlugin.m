@@ -24,6 +24,16 @@
     }];
 }
 
+- (void)pickPhotoFromCamera:(nullable HJPhotoPickerOptions *)input completion:(nonnull void (^)(HJPhotoPickerResult * _Nullable, FlutterError * _Nullable))completion {
+    UIViewController *viewController = [self viewControllerWithWindow:nil];
+    HXPhotoManager *manager = [self createManagerFromOptions:input];
+    [viewController hx_presentCustomCameraViewControllerWithManager:manager done:^(HXPhotoModel *model, HXCustomCameraViewController *viewController) {
+        [self handleSelectedModels:@[model] completion:completion];
+    } cancel:^(HXCustomCameraViewController *viewController) {
+        completion([HJPhotoPickerResult new], nil);
+    }];
+}
+
 #pragma mark -
 
 - (HXPhotoManager *)createManagerFromOptions:(HJPhotoPickerOptions *)options {

@@ -167,4 +167,21 @@ void HJPhotoPickerSetup(id<FlutterBinaryMessenger> binaryMessenger, id<HJPhotoPi
       [channel setMessageHandler:nil];
     }
   }
+    {
+      FlutterBasicMessageChannel *channel =
+        [FlutterBasicMessageChannel
+          messageChannelWithName:@"dev.flutter.pigeon.PhotoPicker.pickPhotoFromCamera"
+          binaryMessenger:binaryMessenger];
+      if (api) {
+        [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+          HJPhotoPickerOptions *input = [HJPhotoPickerOptions fromMap:message];
+          [api pickPhotoFromCamera:input completion:^(HJPhotoPickerResult *_Nullable output, FlutterError *_Nullable error) {
+            callback(wrapResult([output toMap], error));
+          }];
+        }];
+      }
+      else {
+        [channel setMessageHandler:nil];
+      }
+    }
 }
