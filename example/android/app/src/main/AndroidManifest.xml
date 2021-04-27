@@ -2,6 +2,7 @@
     package="com.haijunwei.photo_picker_example">
    <application
         android:label="photo_picker_example"
+       android:name=".App"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

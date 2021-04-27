@@ -170,7 +170,9 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                         }
 
                         override fun onCancel() {
-                            result?.success(PhotoPickerResult())
+                            val resultData = PhotoPickerResult()
+                            resultData.assets = mutableListOf()
+                            result?.success(resultData)
                         }
                     })
         }
