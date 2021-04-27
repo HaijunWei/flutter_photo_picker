@@ -2,22 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c233ca61-62fb-4309-b1e5-8a370dd787de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/CoilEngine.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoAsset.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/engine/GlideEngine.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/CoilEngine.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/PhotoPickerPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/PhotoPickerPlugin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/haijunwei/photo_picker_example/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/haijunwei/photo_picker_example/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/photo_picker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/photo_picker.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,6 +57,22 @@
       <screen x="1920" y="30" width="1920" height="1050" />
     </state>
     <state x="2606" y="250" key="FileChooserDialogImpl/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619417544621" />
+    <state width="1863" height="502" key="GridCell.Tab.0.bottom" timestamp="1619426007879">
+      <screen x="1920" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.bottom/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
+    <state width="1863" height="502" key="GridCell.Tab.0.center" timestamp="1619426007879">
+      <screen x="1920" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.center/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
+    <state width="1863" height="502" key="GridCell.Tab.0.left" timestamp="1619426007879">
+      <screen x="1920" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.left/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
+    <state width="1863" height="502" key="GridCell.Tab.0.right" timestamp="1619426007879">
+      <screen x="1920" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.right/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
     <state x="2271" y="113" key="SettingsEditor" timestamp="1619417634012">
       <screen x="1920" y="30" width="1920" height="1050" />
     </state>

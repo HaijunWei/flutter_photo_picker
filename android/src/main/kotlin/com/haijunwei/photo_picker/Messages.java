@@ -5,9 +5,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.haijunwei.photo_picker.bean.PhotoAsset;
+
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.StandardMessageCodec;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -18,21 +22,31 @@ public class Messages {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class PhotoPickerResult {
-    private List<Object> assets;
-    public List<Object> getAssets() { return assets; }
-    public void setAssets(List<Object> setterArg) { this.assets = setterArg; }
+    private List<PhotoAsset> assets;
+    public List<PhotoAsset> getAssets() { return assets; }
+    public void setAssets(List<PhotoAsset> setterArg) { this.assets = setterArg; }
 
-    Map<String, Object> toMap() {
-      Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("assets", assets);
+    Map<String, List<Object>> toMap() {
+      Map<String, List<Object>> toMapResult = new HashMap<>();
+      List<Object> objects = new ArrayList();
+      if(assets==null){
+          toMapResult.put("assets", null);
+          return toMapResult;
+      }
+
+      for (int i =0;i<assets.size();i++){
+        objects.add(assets.get(i).toMap());
+      }
+      toMapResult.put("assets", objects);
       return toMapResult;
     }
-    static PhotoPickerResult fromMap(Map<String, Object> map) {
-      PhotoPickerResult fromMapResult = new PhotoPickerResult();
-      Object assets = map.get("assets");
-      fromMapResult.assets = (List<Object>)assets;
-      return fromMapResult;
-    }
+//    static PhotoPickerResult fromMap(Map<String, Object> map) {
+//      PhotoPickerResult fromMapResult = new PhotoPickerResult();
+//      Object assets = map.get("assets");
+//
+//      fromMapResult.assets = (List<Object>)assets;
+//      return fromMapResult;
+//    }
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
@@ -116,7 +130,7 @@ public class Messages {
   public static void setup(BinaryMessenger binaryMessenger, PhotoPicker api) {
     {
       BasicMessageChannel<Object> channel =
-              new BasicMessageChannel<>(binaryMessenger, "com.haijunwei.photo_picker.PhotoPicker.pickPhoto", new StandardMessageCodec());
+              new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.PhotoPicker.pickPhoto", new StandardMessageCodec());
       if (api != null) {
         channel.setMessageHandler((message, reply) -> {
           Map<String, Object> wrapped = new HashMap<>();
