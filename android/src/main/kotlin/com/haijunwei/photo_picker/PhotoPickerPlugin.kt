@@ -1,9 +1,10 @@
 package com.haijunwei.photo_picker
 
-import android.app.Application
 import android.util.Log
 import androidx.annotation.NonNull
 import com.haijunwei.photo_picker.bean.PhotoAsset
+import com.haijunwei.photo_picker.bean.PhotoPickerOptions
+import com.haijunwei.photo_picker.bean.PhotoPickerResult
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
@@ -19,8 +20,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
+
 /** PhotoPickerPlugin */
-class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Messages.PhotoPicker {
+class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PhotoPicker {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -59,80 +61,6 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Messa
         channel.setMethodCallHandler(null)
     }
 
-    override fun pickPhoto(arg: Messages.PhotoPickerOptions?, result: Messages.Result<Messages.PhotoPickerResult>?) {
-        activityBinding?.activity.apply {
-
-            Log.d("loper7","options->${arg?.toMap().toString()}")
-
-            //媒体类型
-            var mediaType = arg?.type?.toInt()?.let {
-                //选择照片类型，0 = 图片，1 = 视频，2 = 混合
-               when(it){
-                   0->PictureMimeType.ofImage()
-                   1->PictureMimeType.ofVideo()
-                   else->PictureMimeType.ofAll()
-               }
-            }?:PictureMimeType.ofAll()
-
-            //选择模式
-            var selectionMode  = arg?.maxAssetsCount?.toInt()?.let {
-                when{
-                    it>1-> PictureConfig.MULTIPLE
-                    else ->PictureConfig.SINGLE
-                }
-            }?:PictureConfig.SINGLE
-
-            //单选模式下是否直接返回
-            var isSingleDirectReturn = arg?.singleJumpEdit?:true
-
-            //最大选择数量
-            var maxSelectNum = arg?.maxAssetsCount?.toInt()?:1
-
-            //是否开启裁剪
-            var isEnableCrop = arg?.allowEdit?:true
-
-            //是否开启圆形裁剪
-            var isCircleDimmedLayer = arg?.isRoundCliping?:false
-
-            PictureSelector.create(this)
-                    .openGallery(mediaType)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .selectionMode(selectionMode)
-                    .isSingleDirectReturn(isSingleDirectReturn)
-                    .isWeChatStyle(true)
-                    .maxSelectNum(maxSelectNum)
-                    .isPreviewEggs(true)
-                    .imageSpanCount(4)//每行显示个数
-                    .isPreviewImage(true)
-                    .isGif(true)//是否显示gif
-                    .isEnableCrop(isEnableCrop)
-                    .withAspectRatio(1,1)
-                    .freeStyleCropEnabled(true)
-                    .circleDimmedLayer(isCircleDimmedLayer)
-                    .isCompress(true)
-                    .compressFocusAlpha(true)
-                    .isMaxSelectEnabledMask(true)
-                    .isAutomaticTitleRecyclerTop(true)
-                    .isOriginalImageControl(true)
-                    .forResult(object : OnResultCallbackListener<LocalMedia?> {
-                        override fun onResult(data: List<LocalMedia?>) {
-                            val resultData = Messages.PhotoPickerResult()
-                            resultData.assets = mutableListOf()
-                            for (i in data) {
-                                val photoAsset = PhotoAsset(i?.compressPath?:i?.realPath)
-                                resultData.assets.add(photoAsset)
-                            }
-
-                            result?.success(resultData)
-                        }
-
-                        override fun onCancel() {
-                            result?.success(Messages.PhotoPickerResult())
-                        }
-                    })
-        }
-    }
-
     override fun onDetachedFromActivity() {
         activityBinding = null
     }
@@ -147,5 +75,160 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Messa
 
     override fun onDetachedFromActivityForConfigChanges() {
         onDetachedFromActivity()
+    }
+
+
+    override fun pickPhoto(options: PhotoPickerOptions?, result: com.haijunwei.photo_picker.Result<PhotoPickerResult?>?) {
+        activityBinding?.activity?.apply {
+
+            Log.d("loper7","options->${options?.toMap().toString()}")
+
+            //媒体类型
+            var mediaType = options?.type?.let {
+                //选择照片类型，0 = 图片，1 = 视频，2 = 混合
+               when(it){
+                   0->PictureMimeType.ofImage()
+                   1->PictureMimeType.ofVideo()
+                   else->PictureMimeType.ofAll()
+               }
+            }?:PictureMimeType.ofAll()
+
+            //选择模式
+            var selectionMode  = options?.maxAssetsCount?.let {
+                when{
+                    it>1-> PictureConfig.MULTIPLE
+                    else ->PictureConfig.SINGLE
+                }
+            }?:PictureConfig.SINGLE
+
+            //单选模式下是否直接返回
+            var isSingleDirectReturn = options?.singleJumpEdit?:true
+
+            //最大选择数量
+            var maxSelectNum = options?.maxAssetsCount ?:1
+
+            //是否开启裁剪
+            var isEnableCrop = options?.allowEdit?:true
+
+            //是否开启圆形裁剪
+            var isCircleDimmedLayer = options?.isRoundCliping?:false
+
+            //裁剪宽高比例
+            var photoEditCustomRatioW = options?.photoEditCustomRatioW?:0
+            var photoEditCustomRatioH = options?.photoEditCustomRatioH?:0
+
+            //是否自由裁剪
+            var freeStyleCropEnabled =  photoEditCustomRatioW*photoEditCustomRatioH<=0
+
+            //列表每行显示个数
+            var imageSpanCount = options?.imageSpanCount?:4
+
+            //是否允许打开相机
+            var allowOpenCamera = options?.allowOpenCamera?:true
+
+            //是否加载gif
+            var allowGif = options?.allowGif?:true
+
+
+            PictureSelector.create(this)
+                    .openGallery(mediaType)
+                    .imageEngine(GlideEngine.createGlideEngine())
+                    .selectionMode(selectionMode)
+                    .isSingleDirectReturn(isSingleDirectReturn)
+                    .isWeChatStyle(true)
+                    .maxSelectNum(maxSelectNum)
+                    .isPreviewEggs(true)
+                    .imageSpanCount(imageSpanCount)
+                    .isPreviewImage(true)
+                    .isCamera(allowOpenCamera)
+                    .isGif(allowGif)
+                    .isEnableCrop(isEnableCrop)
+                    .withAspectRatio(photoEditCustomRatioW,photoEditCustomRatioH)
+                    .freeStyleCropEnabled(freeStyleCropEnabled)
+                    .circleDimmedLayer(isCircleDimmedLayer)
+                    .isCompress(true)
+                    .showCropFrame(true)
+                    .showCropGrid(true)
+                    .isMultipleSkipCrop(true)
+                    .compressFocusAlpha(true)
+                    .isMaxSelectEnabledMask(true)
+                    .isAutomaticTitleRecyclerTop(true)
+                    .isOriginalImageControl(true)
+                    .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                        override fun onResult(data: List<LocalMedia?>) {
+                            val resultData = PhotoPickerResult()
+                            resultData.assets = mutableListOf()
+                            for (i in data) {
+                                val photoAsset = PhotoAsset(i?.compressPath?:i?.realPath)
+                                resultData.assets?.add(photoAsset)
+                            }
+
+                            result?.success(resultData)
+                        }
+
+                        override fun onCancel() {
+                            result?.success(PhotoPickerResult())
+                        }
+                    })
+        }
+    }
+
+    override fun openCamera(options: PhotoPickerOptions?, result: com.haijunwei.photo_picker.Result<PhotoPickerResult?>?) {
+        activityBinding?.activity?.apply {
+
+            //媒体类型
+            var mediaType = options?.type?.let {
+                //选择照片类型，0 = 图片，1 = 视频，2 = 混合
+                when(it){
+                    0->PictureMimeType.ofImage()
+                    else->PictureMimeType.ofVideo()
+                }
+            }?:PictureMimeType.ofImage()
+
+            //是否开启裁剪
+            var isEnableCrop = options?.allowEdit?:true
+
+            //是否开启圆形裁剪
+            var isCircleDimmedLayer = options?.isRoundCliping?:false
+
+            //裁剪宽高比例
+            var photoEditCustomRatioW = options?.photoEditCustomRatioW?:0
+            var photoEditCustomRatioH = options?.photoEditCustomRatioH?:0
+
+            //是否自由裁剪
+            var freeStyleCropEnabled =  photoEditCustomRatioW*photoEditCustomRatioH<=0
+
+            PictureSelector.create(this)
+                    .openCamera(mediaType)
+                    .imageEngine(GlideEngine.createGlideEngine())
+                    .isWeChatStyle(true)
+                    .isPreviewEggs(true)
+                    .isPreviewImage(true)
+                    .isEnableCrop(isEnableCrop)
+                    .withAspectRatio(photoEditCustomRatioW,photoEditCustomRatioH)
+                    .freeStyleCropEnabled(freeStyleCropEnabled)
+                    .circleDimmedLayer(isCircleDimmedLayer)
+                    .isCompress(true)
+                    .compressFocusAlpha(true)
+                    .isMaxSelectEnabledMask(true)
+                    .isOriginalImageControl(true)
+                    .imageEngine(GlideEngine.createGlideEngine())
+                    .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                        override fun onResult(data: List<LocalMedia?>) {
+                            val resultData = PhotoPickerResult()
+                            resultData.assets = mutableListOf()
+                            for (i in data) {
+                                val photoAsset = PhotoAsset(i?.compressPath?:i?.realPath)
+                                resultData.assets?.add(photoAsset)
+                            }
+
+                            result?.success(resultData)
+                        }
+
+                        override fun onCancel() {
+                            result?.success(PhotoPickerResult())
+                        }
+                    })
+        }
     }
 }

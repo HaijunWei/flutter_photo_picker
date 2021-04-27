@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c233ca61-62fb-4309-b1e5-8a370dd787de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoAsset.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/engine/GlideEngine.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoPickerOptions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoPickerResult.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/CoilEngine.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/Messages.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/PhotoPickerPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/PhotoPickerPlugin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoAsset.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/haijunwei/photo_picker/bean/PhotoAsset.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,21 +56,25 @@
       <screen x="1920" y="30" width="1920" height="1050" />
     </state>
     <state x="2606" y="250" key="FileChooserDialogImpl/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619417544621" />
-    <state width="1863" height="502" key="GridCell.Tab.0.bottom" timestamp="1619426007879">
-      <screen x="1920" y="30" width="1920" height="1050" />
+    <state width="1863" height="502" key="GridCell.Tab.0.bottom" timestamp="1619432054433">
+      <screen x="0" y="30" width="1536" height="834" />
     </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.bottom/0.30.1536.834/1920.30.1920.1050@0.30.1536.834" timestamp="1619432054433" />
     <state width="1863" height="502" key="GridCell.Tab.0.bottom/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
-    <state width="1863" height="502" key="GridCell.Tab.0.center" timestamp="1619426007879">
-      <screen x="1920" y="30" width="1920" height="1050" />
+    <state width="1863" height="502" key="GridCell.Tab.0.center" timestamp="1619432054433">
+      <screen x="0" y="30" width="1536" height="834" />
     </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.center/0.30.1536.834/1920.30.1920.1050@0.30.1536.834" timestamp="1619432054433" />
     <state width="1863" height="502" key="GridCell.Tab.0.center/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
-    <state width="1863" height="502" key="GridCell.Tab.0.left" timestamp="1619426007879">
-      <screen x="1920" y="30" width="1920" height="1050" />
+    <state width="1863" height="502" key="GridCell.Tab.0.left" timestamp="1619432054433">
+      <screen x="0" y="30" width="1536" height="834" />
     </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.left/0.30.1536.834/1920.30.1920.1050@0.30.1536.834" timestamp="1619432054433" />
     <state width="1863" height="502" key="GridCell.Tab.0.left/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
-    <state width="1863" height="502" key="GridCell.Tab.0.right" timestamp="1619426007879">
-      <screen x="1920" y="30" width="1920" height="1050" />
+    <state width="1863" height="502" key="GridCell.Tab.0.right" timestamp="1619432054433">
+      <screen x="0" y="30" width="1536" height="834" />
     </state>
+    <state width="1863" height="502" key="GridCell.Tab.0.right/0.30.1536.834/1920.30.1920.1050@0.30.1536.834" timestamp="1619432054433" />
     <state width="1863" height="502" key="GridCell.Tab.0.right/0.30.1536.834/1920.30.1920.1050@1920.30.1920.1050" timestamp="1619426007879" />
     <state x="2271" y="113" key="SettingsEditor" timestamp="1619417634012">
       <screen x="1920" y="30" width="1920" height="1050" />
