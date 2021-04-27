@@ -165,6 +165,14 @@ class PhotoPicker {
       return PhotoPickerResult.decode(replyMap['result']!);
     }
   }
+
+  /// 还原状态栏颜色
+  void revertSystemUIOverlayStyle(Brightness style) {
+    SystemChannels.platform.invokeMethod<void>(
+      'SystemChrome.setSystemUIOverlayStyle',
+      {'statusBarBrightness': style.toString()},
+    );
+  }
 }
 
 class PhotoPickerResult {

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -114,7 +113,8 @@ class _MyAppState extends State<MyApp> {
             _Tile(
               title: '打开相机拍照',
               onTap: () {
-                _pickPhotoFromCamera(PhotoPickerOptions()..type = PhotoPickerType.image);
+                _pickPhotoFromCamera(
+                    PhotoPickerOptions()..type = PhotoPickerType.image);
               },
             ),
           ],
