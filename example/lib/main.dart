@@ -29,6 +29,18 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
   }
 
+  void _pickPhotoFromCamera(PhotoPickerOptions options) async {
+    final picker = PhotoPicker();
+    final result = await picker.pickPhotoFromCamera(options);
+    final assets = result.assets;
+
+    _assets.map((e) => print("============================${e.filePath}"));
+
+    if (assets == null || assets.isEmpty) return;
+    _assets = assets as List<PhotoAsset>;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -97,6 +109,12 @@ class _MyAppState extends State<MyApp> {
               title: '选择视频',
               onTap: () {
                 _pickPhoto(PhotoPickerOptions()..type = PhotoPickerType.video);
+              },
+            ),
+            _Tile(
+              title: '打开相机拍照',
+              onTap: () {
+                _pickPhotoFromCamera(PhotoPickerOptions()..type = PhotoPickerType.image);
               },
             ),
           ],
