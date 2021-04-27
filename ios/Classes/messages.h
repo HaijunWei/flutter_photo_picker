@@ -16,17 +16,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HJPhotoAsset : NSObject
 @property(nonatomic, copy, nullable) NSString *filePath;
+@property(nonatomic, strong, nullable) NSNumber *width;
+@property(nonatomic, strong, nullable) NSNumber *height;
 @end
 
 @interface HJPhotoPickerOptions : NSObject
 @property(nonatomic, strong, nullable) NSNumber * type;
 @property(nonatomic, strong, nullable) NSNumber * maxAssetsCount;
 @property(nonatomic, strong, nullable) NSNumber * allowEdit;
-@property(nonatomic, strong, nullable) NSNumber * videoMaximumDuration;
-@property(nonatomic, strong, nullable) NSNumber * videoMinimumDuration;
 @property(nonatomic, strong, nullable) NSNumber * singleJumpEdit;
 @property(nonatomic, strong, nullable) NSNumber * isRoundCliping;
-@property(nonatomic, strong, nullable) NSNumber * reverseDate;
+@property(nonatomic, strong, nullable) NSNumber * photoEditCustomRatioW;
+@property(nonatomic, strong, nullable) NSNumber * photoEditCustomRatioH;
+@property(nonatomic, strong, nullable) NSNumber * imageSpanCount;
+@property(nonatomic, strong, nullable) NSNumber * allowOpenCamera;
+@property(nonatomic, strong, nullable) NSNumber * allowGif;
+@property(nonatomic, strong, nullable) NSNumber * videoMaximumDuration;
+@property(nonatomic, strong, nullable) NSNumber * videoMinimumDuration;
 @end
 
 @protocol HJPhotoPicker

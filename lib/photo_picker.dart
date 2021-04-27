@@ -7,51 +7,65 @@ import 'dart:typed_data' show Uint8List, Int32List, Int64List, Float64List;
 
 import 'package:flutter/services.dart';
 
+enum PhotoPickerType {
+  all,
+  image,
+  video,
+}
+
 class PhotoPickerOptions {
   /// 选择照片类型，0 = 图片，1 = 视频，2 = 混合
-  int? type;
+  PhotoPickerType type = PhotoPickerType.all;
 
   /// 可选资源最大数
-  int? maxAssetsCount;
+  int maxAssetsCount = 9;
 
   /// 是否可以编辑资源
-  bool? allowEdit;
+  bool allowEdit = true;
 
   /// 编辑 - 单选模式下选择图片时是否直接跳转到编辑界面
-  bool? singleJumpEdit;
+  bool singleJumpEdit = true;
 
   /// 编辑 - 是否使用圆形剪裁
-  bool? isRoundCliping;
-
-  /// 编辑 - 是否支持旋转
-  bool? supportRotation;
+  bool isRoundCliping = false;
 
   /// 编辑 - 自定义剪裁比例，宽度
-  int? photoEditCustomRatioW;
+  int photoEditCustomRatioW = 0;
 
   /// 编辑 - 自定义剪裁比例，高度
-  int? photoEditCustomRatioH;
+  int photoEditCustomRatioH = 0;
 
   /// 列表每行显示个数
-  int? imageSpanCount;
+  int imageSpanCount = 4;
 
   /// 是否允许在相册打开相机
-  bool? allowOpenCamera;
+  bool allowOpenCamera = true;
 
-  /// 是否允许旋转Gif
-  bool? allowGif;
+  /// 是否允许选择Gif
+  bool allowGif = false;
 
   int? videoMaximumDuration;
   int? videoMinimumDuration;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    int type;
+    switch (this.type) {
+      case PhotoPickerType.image:
+        type = 0;
+        break;
+      case PhotoPickerType.video:
+        type = 1;
+        break;
+      default:
+        type = 2;
+        break;
+    }
     pigeonMap['type'] = type;
     pigeonMap['maxAssetsCount'] = maxAssetsCount;
     pigeonMap['allowEdit'] = allowEdit;
     pigeonMap['singleJumpEdit'] = singleJumpEdit;
     pigeonMap['isRoundCliping'] = isRoundCliping;
-    pigeonMap['supportRotation'] = supportRotation;
     pigeonMap['photoEditCustomRatioW'] = photoEditCustomRatioW;
     pigeonMap['photoEditCustomRatioH'] = photoEditCustomRatioH;
     pigeonMap['imageSpanCount'] = imageSpanCount;
@@ -64,18 +78,26 @@ class PhotoPickerOptions {
 
   static PhotoPickerOptions decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    int type = pigeonMap['type'] as int;
+    PhotoPickerType _type;
+    if (type == 0) {
+      _type = PhotoPickerType.image;
+    } else if (type == 1) {
+      _type = PhotoPickerType.video;
+    } else {
+      _type = PhotoPickerType.all;
+    }
     return PhotoPickerOptions()
-      ..type = pigeonMap['type'] as int?
-      ..maxAssetsCount = pigeonMap['maxAssetsCount'] as int?
-      ..allowEdit = pigeonMap['allowEdit'] as bool?
-      ..singleJumpEdit = pigeonMap['singleJumpEdit'] as bool?
-      ..isRoundCliping = pigeonMap['isRoundCliping'] as bool?
-      ..supportRotation = pigeonMap['supportRotation'] as bool?
-      ..photoEditCustomRatioW = pigeonMap['photoEditCustomRatioW'] as int?
-      ..photoEditCustomRatioH = pigeonMap['photoEditCustomRatioH'] as int?
-      ..imageSpanCount = pigeonMap['imageSpanCount'] as int?
-      ..allowOpenCamera = pigeonMap['allowOpenCamera'] as bool?
-      ..allowGif = pigeonMap['allowGif'] as bool?
+      ..type = _type
+      ..maxAssetsCount = pigeonMap['maxAssetsCount'] as int
+      ..allowEdit = pigeonMap['allowEdit'] as bool
+      ..singleJumpEdit = pigeonMap['singleJumpEdit'] as bool
+      ..isRoundCliping = pigeonMap['isRoundCliping'] as bool
+      ..photoEditCustomRatioW = pigeonMap['photoEditCustomRatioW'] as int
+      ..photoEditCustomRatioH = pigeonMap['photoEditCustomRatioH'] as int
+      ..imageSpanCount = pigeonMap['imageSpanCount'] as int
+      ..allowOpenCamera = pigeonMap['allowOpenCamera'] as bool
+      ..allowGif = pigeonMap['allowGif'] as bool
       ..videoMinimumDuration = pigeonMap['videoMinimumDuration'] as int?
       ..videoMaximumDuration = pigeonMap['videoMaximumDuration'] as int?;
   }
@@ -138,18 +160,26 @@ class PhotoPickerResult {
 
 class PhotoAsset {
   String? filePath;
+  double width = 0;
+  double height = 0;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['filePath'] = filePath;
+    pigeonMap['width'] = width;
+    pigeonMap['height'] = height;
     return pigeonMap;
   }
 
   static PhotoAsset decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return PhotoAsset()..filePath = pigeonMap['filePath'] as String?;
+    return PhotoAsset()
+      ..filePath = pigeonMap['filePath'] as String?
+      ..width = pigeonMap['width'] as double? ?? 0
+      ..height = pigeonMap['height'] as double? ?? 0;
   }
 
   @override
-  String toString() => 'PhotoAsset(filePath: $filePath)';
+  String toString() =>
+      'PhotoAsset(filePath: $filePath, width: $width, height: $height)';
 }

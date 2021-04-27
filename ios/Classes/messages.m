@@ -69,7 +69,9 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 }
 - (NSDictionary *)toMap {
     return @{
-        @"filePath": self.filePath ?: [NSNull null]
+        @"filePath": self.filePath ?: [NSNull null],
+        @"width": self.width ?: [NSNull null],
+        @"height": self.height ?: [NSNull null]
     };
 }
 
@@ -77,43 +79,73 @@ static NSDictionary<NSString*, id>* wrapResult(NSDictionary *result, FlutterErro
 
 @implementation HJPhotoPickerOptions
 +(HJPhotoPickerOptions*)fromMap:(NSDictionary*)dict {
-  HJPhotoPickerOptions* result = [[HJPhotoPickerOptions alloc] init];
-  result.type = dict[@"type"];
-  if ((NSNull *)result.type == [NSNull null]) {
-    result.type = nil;
-  }
-  result.maxAssetsCount = dict[@"maxAssetsCount"];
-  if ((NSNull *)result.maxAssetsCount == [NSNull null]) {
-    result.maxAssetsCount = nil;
-  }
-  result.allowEdit = dict[@"allowEdit"];
-  if ((NSNull *)result.allowEdit == [NSNull null]) {
-    result.allowEdit = nil;
-  }
-  result.videoMaximumDuration = dict[@"videoMaximumDuration"];
-  if ((NSNull *)result.videoMaximumDuration == [NSNull null]) {
-    result.videoMaximumDuration = nil;
-  }
-  result.videoMinimumDuration = dict[@"videoMinimumDuration"];
-  if ((NSNull *)result.videoMinimumDuration == [NSNull null]) {
-    result.videoMinimumDuration = nil;
-  }
-  result.singleJumpEdit = dict[@"singleJumpEdit"];
-  if ((NSNull *)result.singleJumpEdit == [NSNull null]) {
-    result.singleJumpEdit = nil;
-  }
-  result.isRoundCliping = dict[@"isRoundCliping"];
-  if ((NSNull *)result.isRoundCliping == [NSNull null]) {
-    result.isRoundCliping = nil;
-  }
-  result.reverseDate = dict[@"reverseDate"];
-  if ((NSNull *)result.reverseDate == [NSNull null]) {
-    result.reverseDate = nil;
-  }
+    HJPhotoPickerOptions* result = [[HJPhotoPickerOptions alloc] init];
+    result.type = dict[@"type"];
+    if ((NSNull *)result.type == [NSNull null]) {
+      result.type = nil;
+    }
+    result.maxAssetsCount = dict[@"maxAssetsCount"];
+    if ((NSNull *)result.maxAssetsCount == [NSNull null]) {
+      result.maxAssetsCount = nil;
+    }
+    result.allowEdit = dict[@"allowEdit"];
+    if ((NSNull *)result.allowEdit == [NSNull null]) {
+      result.allowEdit = nil;
+    }
+    result.singleJumpEdit = dict[@"singleJumpEdit"];
+    if ((NSNull *)result.singleJumpEdit == [NSNull null]) {
+      result.singleJumpEdit = nil;
+    }
+    result.isRoundCliping = dict[@"isRoundCliping"];
+    if ((NSNull *)result.isRoundCliping == [NSNull null]) {
+      result.isRoundCliping = nil;
+    }
+    result.photoEditCustomRatioW = dict[@"photoEditCustomRatioW"];
+    if ((NSNull *)result.photoEditCustomRatioW == [NSNull null]) {
+      result.photoEditCustomRatioW = nil;
+    }
+    result.photoEditCustomRatioH = dict[@"photoEditCustomRatioH"];
+    if ((NSNull *)result.photoEditCustomRatioH == [NSNull null]) {
+      result.photoEditCustomRatioH = nil;
+    }
+    result.imageSpanCount = dict[@"imageSpanCount"];
+    if ((NSNull *)result.imageSpanCount == [NSNull null]) {
+      result.imageSpanCount = nil;
+    }
+    result.allowOpenCamera = dict[@"allowOpenCamera"];
+    if ((NSNull *)result.allowOpenCamera == [NSNull null]) {
+      result.allowOpenCamera = nil;
+    }
+    result.allowGif = dict[@"allowGif"];
+    if ((NSNull *)result.allowGif == [NSNull null]) {
+      result.allowGif = nil;
+    }
+    result.videoMaximumDuration = dict[@"videoMaximumDuration"];
+    if ((NSNull *)result.videoMaximumDuration == [NSNull null]) {
+      result.videoMaximumDuration = nil;
+    }
+    result.videoMinimumDuration = dict[@"videoMinimumDuration"];
+    if ((NSNull *)result.videoMinimumDuration == [NSNull null]) {
+      result.videoMinimumDuration = nil;
+    }
   return result;
 }
 -(NSDictionary*)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.type ? self.type : [NSNull null]), @"type", (self.maxAssetsCount ? self.maxAssetsCount : [NSNull null]), @"maxAssetsCount", (self.allowEdit ? self.allowEdit : [NSNull null]), @"allowEdit", (self.videoMaximumDuration ? self.videoMaximumDuration : [NSNull null]), @"videoMaximumDuration", (self.videoMinimumDuration ? self.videoMinimumDuration : [NSNull null]), @"videoMinimumDuration", (self.singleJumpEdit ? self.singleJumpEdit : [NSNull null]), @"singleJumpEdit", (self.isRoundCliping ? self.isRoundCliping : [NSNull null]), @"isRoundCliping", (self.reverseDate ? self.reverseDate : [NSNull null]), @"reverseDate", nil];
+    return @{
+        @"type": (self.type ? self.type : [NSNull null]),
+        @"maxAssetsCount": (self.maxAssetsCount ? self.maxAssetsCount : [NSNull null]),
+        @"allowEdit": (self.allowEdit ? self.allowEdit : [NSNull null]),
+        @"singleJumpEdit": (self.singleJumpEdit ? self.singleJumpEdit : [NSNull null]),
+        @"isRoundCliping": (self.isRoundCliping ? self.isRoundCliping : [NSNull null]),
+        @"photoEditCustomRatioW": (self.photoEditCustomRatioW ? self.photoEditCustomRatioW : [NSNull null]),
+        @"photoEditCustomRatioH": (self.photoEditCustomRatioH ? self.photoEditCustomRatioH : [NSNull null]),
+        @"imageSpanCount": (self.imageSpanCount ? self.imageSpanCount : [NSNull null]),
+        @"allowOpenCamera": (self.allowOpenCamera ? self.allowOpenCamera : [NSNull null]),
+        @"allowGif": (self.allowGif ? self.allowGif : [NSNull null]),
+        @"imageSpanCount": (self.imageSpanCount ? self.imageSpanCount : [NSNull null]),
+        @"videoMaximumDuration": (self.videoMaximumDuration ? self.videoMaximumDuration : [NSNull null]),
+        @"videoMinimumDuration": (self.videoMinimumDuration ? self.videoMinimumDuration : [NSNull null]),
+    };
 }
 @end
 

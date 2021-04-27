@@ -48,21 +48,32 @@ class _MyAppState extends State<MyApp> {
             _Tile(
               title: '打开相册',
               onTap: () {
-                _pickPhoto(PhotoPickerOptions());
+                _pickPhoto(
+                  PhotoPickerOptions()..type = PhotoPickerType.image,
+                );
               },
             ),
             _Tile(
               title: '选择单图',
               onTap: () {
-                _pickPhoto(PhotoPickerOptions()..maxAssetsCount = 1);
+                _pickPhoto(
+                  PhotoPickerOptions()
+                    ..type = PhotoPickerType.image
+                    ..maxAssetsCount = 1
+                    ..photoEditCustomRatioW = 1
+                    ..photoEditCustomRatioH = 1,
+                );
               },
             ),
             _Tile(
               title: '选择单图并编辑',
               onTap: () {
-                _pickPhoto(PhotoPickerOptions()
-                  ..maxAssetsCount = 1
-                  ..singleJumpEdit = true);
+                _pickPhoto(
+                  PhotoPickerOptions()
+                    ..type = PhotoPickerType.image
+                    ..maxAssetsCount = 1
+                    ..singleJumpEdit = true,
+                );
               },
             ),
             _Tile(
@@ -70,6 +81,7 @@ class _MyAppState extends State<MyApp> {
               onTap: () {
                 _pickPhoto(
                   PhotoPickerOptions()
+                    ..type = PhotoPickerType.image
                     ..maxAssetsCount = 1
                     ..singleJumpEdit = true
                     ..isRoundCliping = true,
@@ -79,7 +91,7 @@ class _MyAppState extends State<MyApp> {
             _Tile(
               title: '选择视频',
               onTap: () {
-                _pickPhoto(PhotoPickerOptions()..type = 1);
+                _pickPhoto(PhotoPickerOptions()..type = PhotoPickerType.video);
               },
             ),
           ],

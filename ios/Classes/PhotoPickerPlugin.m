@@ -37,8 +37,6 @@
         }
     }
     if (options.allowEdit != nil) { manager.configuration.photoCanEdit = options.allowEdit.boolValue; }
-    if (options.videoMaximumDuration != nil) { manager.configuration.videoMaximumDuration = options.videoMaximumDuration.intValue; }
-    if (options.videoMinimumDuration != nil) { manager.configuration.videoMinimumDuration = options.videoMinimumDuration.intValue; }
     if (options.singleJumpEdit != nil) { manager.configuration.singleJumpEdit = options.singleJumpEdit.boolValue; }
     if (options.isRoundCliping != nil) {
         if (options.isRoundCliping.boolValue) {
@@ -47,7 +45,16 @@
             manager.configuration.photoEditConfigur.onlyCliping = YES;
         }
     }
-    if (options.reverseDate != nil) { manager.configuration.reverseDate = options.reverseDate.boolValue; }
+    if (options.photoEditCustomRatioW != nil && options.photoEditCustomRatioW.intValue > 0 && options.photoEditCustomRatioH != nil && options.photoEditCustomRatioW.intValue > 0) {
+        manager.configuration.photoEditConfigur.aspectRatio = HXPhotoEditAspectRatioType_Custom;
+        manager.configuration.photoEditConfigur.customAspectRatio = CGSizeMake(options.photoEditCustomRatioW.intValue, options.photoEditCustomRatioH.intValue);
+    }
+    if (options.imageSpanCount != nil) { manager.configuration.rowCount = options.imageSpanCount.intValue; }
+    if (options.allowOpenCamera != nil) { manager.configuration.openCamera = options.allowOpenCamera.boolValue; }
+    if (options.allowGif != nil) { manager.configuration.lookGifPhoto = options.allowGif.boolValue; }
+    if (options.videoMaximumDuration != nil) { manager.configuration.videoMaximumDuration = options.videoMaximumDuration.intValue; }
+    if (options.videoMinimumDuration != nil) { manager.configuration.videoMinimumDuration = options.videoMinimumDuration.intValue; }
+    manager.configuration.reverseDate = YES;
     return manager;
 }
 
@@ -72,6 +79,8 @@
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:imageData attributes:nil];
             HJPhotoAsset *resultAsset = [HJPhotoAsset new];
             resultAsset.filePath = filePath;
+            resultAsset.width = @(model.imageSize.width);
+            resultAsset.height = @(model.imageSize.height);
             resultAssers[i] = resultAsset;
             dispatch_group_leave(group);
         } failed:^(NSDictionary * _Nullable info, HXPhotoModel * _Nullable model) {
