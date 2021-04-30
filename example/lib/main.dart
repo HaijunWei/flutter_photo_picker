@@ -302,6 +302,7 @@ class _MyAppState extends State<MyApp> {
                     options.type = this.type;
                     options.photoEditCustomRatioH = this.photoEditCustomRatioH;
                     options.photoEditCustomRatioW = this.photoEditCustomRatioW;
+                    //to camera
                     _pickPhotoFromCamera(options);
                   },
                 ),
