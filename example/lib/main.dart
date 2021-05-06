@@ -23,8 +23,8 @@ class _MyAppState extends State<MyApp> {
 
     _assets.map((e) => print("============================${e.filePath}"));
 
-    if (assets == null || assets.isEmpty) return;
-    _assets = assets as List<PhotoAsset>;
+    if (assets.isEmpty) return;
+    _assets = assets;
     setState(() {});
   }
 
@@ -35,8 +35,8 @@ class _MyAppState extends State<MyApp> {
 
     _assets.map((e) => print("============================${e.filePath}"));
 
-    if (assets == null || assets.isEmpty) return;
-    _assets = assets as List<PhotoAsset>;
+    if (assets.isEmpty) return;
+    _assets = assets;
     setState(() {});
   }
 
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
               children: _assets
                   .map(
                     (e) => Image.file(
-                      File(e.filePath ?? ''),
+                      File(e.filePath),
                       fit: BoxFit.cover,
                       width: 100,
                       height: 100,
