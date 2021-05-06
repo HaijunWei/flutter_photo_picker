@@ -163,6 +163,8 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                             resultData.assets = mutableListOf()
                             for (i in data) {
                                 val photoAsset = PhotoAsset(i?.compressPath ?: i?.realPath)
+                                photoAsset.width = i?.width?.toDouble()
+                                photoAsset.height = i?.height?.toDouble()
                                 resultData.assets?.add(photoAsset)
                             }
 
@@ -228,7 +230,8 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                             resultData.assets = mutableListOf()
                             for (i in data) {
                                 val photoAsset = PhotoAsset(i?.compressPath ?: i?.realPath)
-                                resultData.assets?.add(photoAsset)
+                                photoAsset.width = i?.width?.toDouble()
+                                photoAsset.height = i?.height?.toDouble()
                             }
 
                             result?.success(resultData)
