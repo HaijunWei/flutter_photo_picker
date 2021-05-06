@@ -140,7 +140,7 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                     .isPreviewEggs(true)
                     .imageSpanCount(imageSpanCount)
                     .isPreviewImage(true)
-                    .isWeChatStyle(true)
+                    .isWeChatStyle(false)
                     .isCamera(allowOpenCamera)
                     .isGif(allowGif)
                     .isEnableCrop(isEnableCrop)
@@ -155,7 +155,7 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                     .isMaxSelectEnabledMask(true)
                     .isAutomaticTitleRecyclerTop(true)
                     .isOriginalImageControl(true)
-//                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
+                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
                     .setPictureCropStyle(PhotoPickerTheme.buildPictureCropParameterStyle(this))
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(data: List<LocalMedia?>) {
@@ -203,6 +203,8 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
             //是否自由裁剪
             var freeStyleCropEnabled = photoEditCustomRatioW * photoEditCustomRatioH <= 0
 
+            
+            R.layout.picture_dialog_camera_selected
             PictureSelector.create(this)
                     .openCamera(mediaType)
                     .imageEngine(GlideEngine.createGlideEngine())
@@ -218,7 +220,7 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                     .isMaxSelectEnabledMask(true)
                     .isOriginalImageControl(true)
                     .imageEngine(GlideEngine.createGlideEngine())
-//                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
+                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
                     .setPictureCropStyle(PhotoPickerTheme.buildPictureCropParameterStyle(this))
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(data: List<LocalMedia?>) {
