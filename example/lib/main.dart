@@ -52,9 +52,10 @@ class _MyAppState extends State<MyApp> {
     final assets = result.assets;
 
     _assets.map((e) => print("============================${e.filePath}"));
+    picker.revertSystemUIOverlayStyle(Brightness.light);
 
-    if (assets == null || assets.isEmpty) return;
-    _assets = assets as List<PhotoAsset>;
+    if (assets.isEmpty) return;
+    _assets = assets;
     setState(() {});
   }
 
@@ -65,8 +66,8 @@ class _MyAppState extends State<MyApp> {
 
     _assets.map((e) => print("============================${e.filePath}"));
 
-    if (assets == null || assets.isEmpty) return;
-    _assets = assets as List<PhotoAsset>;
+    if (assets.isEmpty) return;
+    _assets = assets;
     setState(() {});
   }
 
@@ -86,7 +87,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Row(
                   children: <Widget>[
-                    _radio(
+                    _Radio(
                       text: "All",
                       groupValue: type,
                       value: PhotoPickerType.all,
@@ -96,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                         });
                       },
                     ),
-                    _radio(
+                    _Radio(
                       text: "Image",
                       groupValue: type,
                       value: PhotoPickerType.image,
@@ -106,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                         });
                       },
                     ),
-                    _radio(
+                    _Radio(
                       text: "Video",
                       groupValue: type,
                       value: PhotoPickerType.video,
@@ -125,7 +126,7 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.black38, fontSize: 16),
                   ),
                 ),
-                _numberTextField(
+                _NumberTextField(
                   value: maxAssetsCount.toString(),
                   onChanged: (value) {
                     setState(() {
@@ -140,7 +141,7 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.black38, fontSize: 16),
                   ),
                 ),
-                _checkBox(
+                _CheckBox(
                   text: "AllowEdit",
                   value: this.allowEdit,
                   onChanged: (value) {
@@ -149,7 +150,7 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                 ),
-                _checkBox(
+                _CheckBox(
                   text: "SingleJumpEdit",
                   value: this.singleJumpEdit,
                   onChanged: (value) {
@@ -158,7 +159,7 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                 ),
-                _checkBox(
+                _CheckBox(
                   text: "IsRoundCliping",
                   value: this.isRoundCliping,
                   onChanged: (value) {
@@ -175,15 +176,15 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Row(
                   children: <Widget>[
-                    _numberTextField(
+                    _NumberTextField(
                       value: photoEditCustomRatioW.toString(),
                       onChanged: (value) {
                         setState(() {
-                          this.photoEditCustomRatioW =int.parse(value);
+                          this.photoEditCustomRatioW = int.parse(value);
                         });
                       },
                     ),
-                    _numberTextField(
+                    _NumberTextField(
                       value: photoEditCustomRatioW.toString(),
                       onChanged: (value) {
                         setState(() {
@@ -200,7 +201,7 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.black38, fontSize: 16),
                   ),
                 ),
-                _checkBox(
+                _CheckBox(
                   text: "AllowOpenCamera",
                   value: this.allowOpenCamera,
                   onChanged: (value) {
@@ -209,7 +210,7 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                 ),
-                _checkBox(
+                _CheckBox(
                   text: "AllowGif",
                   value: this.allowGif,
                   onChanged: (value) {
@@ -224,7 +225,7 @@ class _MyAppState extends State<MyApp> {
                     "ImageSpanCount",
                   ),
                 ),
-                _numberTextField(
+                _NumberTextField(
                   value: imageSpanCount.toString(),
                   onChanged: (value) {
                     setState(() {
@@ -251,7 +252,7 @@ class _MyAppState extends State<MyApp> {
                     children: _assets
                         .map(
                           (e) => Image.file(
-                            File(e.filePath ?? ''),
+                            File(e.filePath),
                             fit: BoxFit.cover,
                             width: 100,
                             height: 100,
@@ -260,7 +261,9 @@ class _MyAppState extends State<MyApp> {
                         .toList(),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 _Button(
                   title: "CONFIG",
                   color: Colors.blue,
@@ -268,7 +271,9 @@ class _MyAppState extends State<MyApp> {
                     Scaffold.of(context).openDrawer();
                   },
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 _Button(
                   title: "OPEN PHOTO PICKER",
                   color: Colors.blueAccent,
@@ -313,8 +318,8 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class _numberTextField extends StatelessWidget {
-  const _numberTextField({
+class _NumberTextField extends StatelessWidget {
+  const _NumberTextField({
     Key? key,
     required this.onChanged,
     required this.value,
@@ -354,8 +359,8 @@ class _numberTextField extends StatelessWidget {
   }
 }
 
-class _checkBox extends StatelessWidget {
-  const _checkBox({
+class _CheckBox extends StatelessWidget {
+  const _CheckBox({
     Key? key,
     required this.text,
     required this.value,
@@ -383,8 +388,8 @@ class _checkBox extends StatelessWidget {
   }
 }
 
-class _radio extends StatelessWidget {
-  const _radio({
+class _Radio extends StatelessWidget {
+  const _Radio({
     Key? key,
     required this.text,
     required this.groupValue,
@@ -436,7 +441,9 @@ class _Button extends StatelessWidget {
         width: 200,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.all(Radius.circular(5))),
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+        ),
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Text(title, style: TextStyle(color: Colors.white)),
       ),
