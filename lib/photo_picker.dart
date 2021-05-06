@@ -134,8 +134,8 @@ class PhotoPickerResult {
 
   factory PhotoPickerResult.fromMap(Map<String, dynamic> map) {
     return PhotoPickerResult(
-      assets: List<PhotoAsset>.from(
-          map['assets']?.map((x) => PhotoAsset.fromMap(x))),
+      assets: List<PhotoAsset>.from(map['assets']
+          ?.map((x) => PhotoAsset.fromMap(Map<String, dynamic>.from(x)))),
     );
   }
 
