@@ -83,16 +83,30 @@
             break;
         }
         [model requestImageDataStartRequestICloud:nil progressHandler:nil success:^(NSData * _Nullable imageData, UIImageOrientation orientation, HXPhotoModel * _Nullable model, NSDictionary * _Nullable info) {
-            NSString *tempDir = NSTemporaryDirectory();
-            NSString *filename = [NSString stringWithFormat:@"photo_picker_%@", [[NSUUID UUID] UUIDString]];
-            NSString *filePath = [tempDir stringByAppendingPathComponent:filename];
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:imageData attributes:nil];
-            HJPhotoAsset *resultAsset = [HJPhotoAsset new];
-            resultAsset.filePath = filePath;
-            resultAsset.width = @(model.imageSize.width);
-            resultAsset.height = @(model.imageSize.height);
-            resultAssers[i] = resultAsset;
-            dispatch_group_leave(group);
+            if (model.subType == HXPhotoModelMediaSubTypePhoto) {
+                NSString *tempDir = NSTemporaryDirectory();
+                NSString *filename = [NSString stringWithFormat:@"photo_picker_%@", [[NSUUID UUID] UUIDString]];
+                NSString *filePath = [tempDir stringByAppendingPathComponent:filename];
+                [[NSFileManager defaultManager] createFileAtPath:filePath contents:imageData attributes:nil];
+                HJPhotoAsset *resultAsset = [HJPhotoAsset new];
+                resultAsset.filePath = filePath;
+                resultAsset.width = @(model.imageSize.width);
+                resultAsset.height = @(model.imageSize.height);
+                resultAssers[i] = resultAsset;
+                dispatch_group_leave(group);
+            } else if (model.subType == HXPhotoModelMediaSubTypeVideo) {
+                [model exportVideoWithPresetName:AVAssetExportPresetMediumQuality startRequestICloud:nil iCloudProgressHandler:nil exportProgressHandler:nil success:^(NSURL * _Nullable videoURL, HXPhotoModel * _Nullable model) {
+                    HJPhotoAsset *resultAsset = [HJPhotoAsset new];
+                    resultAsset.filePath = videoURL.path;
+                    resultAsset.width = @(model.imageSize.width);
+                    resultAsset.height = @(model.imageSize.height);
+                    resultAssers[i] = resultAsset;
+                    dispatch_group_leave(group);
+                } failed:^(NSDictionary * _Nullable info, HXPhotoModel * _Nullable model) {
+                    isError = YES;
+                    dispatch_group_leave(group);
+                }];
+            }
         } failed:^(NSDictionary * _Nullable info, HXPhotoModel * _Nullable model) {
             isError = YES;
             dispatch_group_leave(group);
