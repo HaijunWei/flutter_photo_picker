@@ -31,13 +31,15 @@ object PhotoPickerTheme {
         // 是否改变状态栏字体颜色(黑白切换)
         mPictureParameterStyle.isChangeStatusBarFontColor = false
         // 是否开启右下角已完成(0/9)风格
-        mPictureParameterStyle.isOpenCompletedNumStyle = false
+        mPictureParameterStyle.isOpenCompletedNumStyle = true
         // 是否开启类似QQ相册带数字选择风格
-        mPictureParameterStyle.isOpenCheckNumStyle = false
+        mPictureParameterStyle.isOpenCheckNumStyle = true
         // 相册状态栏背景色
         mPictureParameterStyle.pictureStatusBarColor = Color.parseColor("#272726")
         // 相册列表标题栏背景色
         mPictureParameterStyle.pictureTitleBarBackgroundColor = Color.parseColor("#272726")
+        //相册父容器背景色
+        mPictureParameterStyle.pictureContainerBackgroundColor = Color.parseColor("#272726")
         // 相册列表标题栏右侧上拉箭头
         mPictureParameterStyle.pictureTitleUpResId = R.drawable.picture_icon_arrow_up
         // 相册列表标题栏右侧下拉箭头
@@ -51,7 +53,7 @@ object PhotoPickerTheme {
         // 相册右侧取消按钮字体颜色
         mPictureParameterStyle.pictureCancelTextColor = ContextCompat.getColor(context, R.color.picture_color_white)
         // 相册列表勾选图片样式
-        mPictureParameterStyle.pictureCheckedStyle = R.drawable.picture_checkbox_selector
+        mPictureParameterStyle.pictureCheckedStyle = R.drawable.picture_checkbox_num_selector
         // 选择相册目录背景样式
         mPictureParameterStyle.pictureAlbumStyle = R.drawable.picture_item_select_bg
         // 相册列表底部背景色
@@ -67,7 +69,7 @@ object PhotoPickerTheme {
         // 相册列表未完成色值(请选择 不可点击色值)
         mPictureParameterStyle.pictureUnCompleteTextColor = ContextCompat.getColor(context, R.color.picture_color_9b)
         // 预览界面底部背景色
-        mPictureParameterStyle.picturePreviewBottomBgColor = ContextCompat.getColor(context, R.color.picture_color_grey_3e)
+        mPictureParameterStyle.picturePreviewBottomBgColor = Color.parseColor("#272726")
         // 外部预览界面删除按钮样式
         mPictureParameterStyle.pictureExternalPreviewDeleteStyle = R.drawable.picture_icon_delete
         // 外部预览界面是否显示删除按钮
@@ -76,6 +78,13 @@ object PhotoPickerTheme {
         mPictureParameterStyle.pictureUnCompleteBackgroundStyle = R.drawable.picture_send_button_default_bg
         // 相册右侧按钮可点击背景样式,只针对isWeChatStyle 为true时有效果
         mPictureParameterStyle.pictureCompleteBackgroundStyle = R.drawable.picture_send_button_bg
+        //文件夹字体颜色
+        mPictureParameterStyle.folderTextColor =Color.parseColor("#DDDDDD")
+        //原图勾选样式
+        mPictureParameterStyle.pictureOriginalControlStyle =R.drawable.picture_original_wechat_checkbox
+        //原图文字颜色
+        mPictureParameterStyle.pictureOriginalFontColor =Color.parseColor("#FFFFFF")
+
 
         return mPictureParameterStyle
     }
