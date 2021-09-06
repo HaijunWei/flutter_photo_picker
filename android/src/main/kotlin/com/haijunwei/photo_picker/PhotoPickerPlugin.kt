@@ -232,7 +232,7 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
                                 val photoAsset = PhotoAsset(i?.compressPath ?: i?.realPath)
                                 photoAsset.width = i?.width?.toDouble()
                                 photoAsset.height = i?.height?.toDouble()
-                                resultData.assets.add(photoAsset)
+                                resultData.assets?.add(photoAsset)
                             }
                             result?.success(resultData)
                         }
