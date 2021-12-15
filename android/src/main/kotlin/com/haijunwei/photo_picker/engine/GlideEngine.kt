@@ -91,47 +91,6 @@ class GlideEngine private constructor() : ImageEngine {
     }
 
     /**
-     * 加载网络图片适配长图方案
-     * # 注意：此方法只有加载网络图片才会回调
-     *
-     * @param context
-     * @param url
-     * @param imageView
-     * @param longImageView
-     * @ 已废弃
-     */
-    override fun loadImage(context: Context, url: String,
-                           imageView: ImageView,
-                           longImageView: SubsamplingScaleImageView) {
-        Glide.with(context)
-                .asBitmap()
-                .load(url)
-                .into(object : ImageViewTarget<Bitmap?>(imageView) {
-                    protected override fun setResource(resource: Bitmap?) {
-                        if (resource != null) {
-                            val eqLongImage = MediaUtils.isLongImg(resource.width,
-                                    resource.height)
-                            longImageView.visibility = if (eqLongImage) View.VISIBLE else View.GONE
-                            imageView.visibility = if (eqLongImage) View.GONE else View.VISIBLE
-                            if (eqLongImage) {
-                                // 加载长图
-                                longImageView.isQuickScaleEnabled = true
-                                longImageView.isZoomEnabled = true
-                                longImageView.setDoubleTapZoomDuration(100)
-                                longImageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
-                                longImageView.setDoubleTapZoomDpi(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER)
-                                longImageView.setImage(ImageSource.bitmap(resource),
-                                        ImageViewState(0f, PointF(0f, 0f), 0))
-                            } else {
-                                // 普通图片
-                                imageView.setImageBitmap(resource)
-                            }
-                        }
-                    }
-                })
-    }
-
-    /**
      * 加载相册目录
      *
      * @param context   上下文
@@ -153,21 +112,6 @@ class GlideEngine private constructor() : ImageEngine {
                         imageView.setImageDrawable(circularBitmapDrawable)
                     }
                 })
-    }
-
-    /**
-     * 加载gif
-     *
-     * @param context   上下文
-     * @param url       图片路径
-     * @param imageView 承载图片ImageView
-     */
-    override fun loadAsGifImage(context: Context, url: String,
-                                imageView: ImageView) {
-        Glide.with(context)
-                .asGif()
-                .load(url)
-                .into(imageView)
     }
 
     /**
