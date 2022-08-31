@@ -5,13 +5,13 @@ import androidx.annotation.NonNull
 import com.haijunwei.photo_picker.bean.PhotoAsset
 import com.haijunwei.photo_picker.bean.PhotoPickerOptions
 import com.haijunwei.photo_picker.bean.PhotoPickerResult
-import com.haijunwei.photo_picker.theme.PhotoPickerTheme
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.basic.PictureSelector
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectModeConfig
 import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.listener.OnResultCallbackListener
-import com.luck.pictureselector.GlideEngine
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.haijunwei.photo_picker.engine.GlideEngine
+import com.haijunwei.photo_picker.engine.UCropEngine
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -88,19 +88,19 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
             var mediaType = options?.type?.let {
                 //选择照片类型，0 = 图片，1 = 视频，2 = 混合
                 when (it) {
-                    0 -> PictureMimeType.ofImage()
-                    1 -> PictureMimeType.ofVideo()
-                    else -> PictureMimeType.ofAll()
+                    0 -> SelectMimeType.ofImage()
+                    1 -> SelectMimeType.ofVideo()
+                    else -> SelectMimeType.ofAll()
                 }
-            } ?: PictureMimeType.ofAll()
+            } ?: SelectMimeType.ofAll()
 
             //选择模式
             var selectionMode = options?.maxAssetsCount?.let {
                 when {
-                    it > 1 -> PictureConfig.MULTIPLE
-                    else -> PictureConfig.SINGLE
+                    it > 1 -> SelectModeConfig.MULTIPLE
+                    else -> SelectModeConfig.SINGLE
                 }
-            } ?: PictureConfig.SINGLE
+            } ?: SelectModeConfig.SINGLE
 
             //单选模式下是否直接返回
             var isSingleDirectReturn = options?.singleJumpEdit ?: true
@@ -133,32 +133,22 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
 
             PictureSelector.create(this)
                     .openGallery(mediaType)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .selectionMode(selectionMode)
-                    .isSingleDirectReturn(isSingleDirectReturn)
-                    .maxSelectNum(maxSelectNum)
-                    .isPreviewEggs(true)
-                    .imageSpanCount(imageSpanCount)
+                    .setImageEngine(GlideEngine.createGlideEngine())
+                    .setSelectionMode(selectionMode)
+//                    .setisisSingleDirectReturn(isSingleDirectReturn)
+                    .setMaxSelectNum(maxSelectNum)
+                    .setImageSpanCount(imageSpanCount)
                     .isPreviewImage(true)
-                    .isWeChatStyle(false)
-                    .isCamera(allowOpenCamera)
+//                    .isWeChatStyle(false)
+//                    .isCamera(allowOpenCamera)
                     .isGif(allowGif)
-                    .isEnableCrop(isEnableCrop)
-                    .withAspectRatio(photoEditCustomRatioW, photoEditCustomRatioH)
-                    .freeStyleCropEnabled(freeStyleCropEnabled)
-                    .circleDimmedLayer(isCircleDimmedLayer)
-                    .isCompress(true)
-                    .showCropFrame(true)
-                    .showCropGrid(true)
-                    .isMultipleSkipCrop(true)
-                    .compressFocusAlpha(true)
+                    .setCropEngine(UCropEngine())
                     .isMaxSelectEnabledMask(true)
                     .isAutomaticTitleRecyclerTop(true)
-                    .isOriginalImageControl(true)
-                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
-                    .setPictureCropStyle(PhotoPickerTheme.buildPictureCropParameterStyle(this))
+//                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
+//                    .setPictureCropStyle(PhotoPickerTheme.buildPictureCropParameterStyle(this))
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
-                        override fun onResult(data: List<LocalMedia?>) {
+                        override fun onResult(data: ArrayList<LocalMedia?>) {
                             val resultData = PhotoPickerResult()
                             resultData.assets = mutableListOf()
                             for (i in data) {
@@ -187,10 +177,10 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
             var mediaType = options?.type?.let {
                 //选择照片类型，0 = 图片，1 = 视频，2 = 混合
                 when (it) {
-                    0 -> PictureMimeType.ofImage()
-                    else -> PictureMimeType.ofVideo()
+                    0 -> SelectMimeType.ofImage()
+                    else -> SelectMimeType.ofVideo()
                 }
-            } ?: PictureMimeType.ofImage()
+            } ?: SelectMimeType.ofImage()
 
             //是否开启裁剪
             var isEnableCrop = options?.allowEdit ?: true
@@ -205,27 +195,11 @@ class PhotoPickerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Photo
             //是否自由裁剪
             var freeStyleCropEnabled = photoEditCustomRatioW * photoEditCustomRatioH <= 0
 
-            
-            R.layout.picture_dialog_camera_selected
+
             PictureSelector.create(this)
                     .openCamera(mediaType)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .isPreviewEggs(true)
-                    .isPreviewImage(true)
-                    .isWeChatStyle(true)
-                    .isEnableCrop(isEnableCrop)
-                    .withAspectRatio(photoEditCustomRatioW, photoEditCustomRatioH)
-                    .freeStyleCropEnabled(freeStyleCropEnabled)
-                    .circleDimmedLayer(isCircleDimmedLayer)
-                    .isCompress(true)
-                    .compressFocusAlpha(true)
-                    .isMaxSelectEnabledMask(true)
-                    .isOriginalImageControl(true)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .setPictureStyle(PhotoPickerTheme.buildPictureParameterStyle(this))
-                    .setPictureCropStyle(PhotoPickerTheme.buildPictureCropParameterStyle(this))
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
-                        override fun onResult(data: List<LocalMedia?>) {
+                        override fun onResult(data: ArrayList<LocalMedia?>) {
                             val resultData = PhotoPickerResult()
                             resultData.assets = mutableListOf()
                             for (i in data) {
