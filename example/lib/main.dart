@@ -52,7 +52,6 @@ class _MyAppState extends State<MyApp> {
     final assets = result.assets;
 
     _assets.map((e) => print("============================${e.filePath}"));
-    picker.revertSystemUIOverlayStyle(Brightness.light);
 
     if (assets.isEmpty) return;
     _assets = assets;
@@ -185,7 +184,7 @@ class _MyAppState extends State<MyApp> {
                       },
                     ),
                     _NumberTextField(
-                      value: photoEditCustomRatioW.toString(),
+                      value: photoEditCustomRatioH.toString(),
                       onChanged: (value) {
                         setState(() {
                           this.photoEditCustomRatioH = int.parse(value);

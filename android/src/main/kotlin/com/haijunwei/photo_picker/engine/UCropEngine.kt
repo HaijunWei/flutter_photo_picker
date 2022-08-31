@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
@@ -17,7 +18,9 @@ import com.yalantis.ucrop.model.AspectRatio
 import com.bumptech.glide.request.transition.Transition
 
 
-class UCropEngine : CropFileEngine {
+class UCropEngine(private val isCircleDimmedLayer: Boolean,
+                  val photoEditCustomRatioW: Int,
+                  val photoEditCustomRatioH: Int) : CropFileEngine {
 
     override fun onStartCrop(fragment: Fragment,
         srcUri: Uri,
@@ -47,12 +50,17 @@ class UCropEngine : CropFileEngine {
                     })
             }
         })
+        //是否自由裁剪
+        val freeStyleCropEnabled = photoEditCustomRatioW * photoEditCustomRatioH <= 0
         var options = UCrop.Options()
-        options.setMultipleCropAspectRatio(AspectRatio("",1f,1f)) //多图裁剪时每张对应的裁剪比例
         options.isForbidSkipMultipleCrop(true) //多图裁剪时是否支持跳过
         options.isCropDragSmoothToCenter(true) //图片是否跟随裁剪框居中
-        options. isForbidCropGifWebp(true) //是否禁止裁剪gif和webp
+        options.isForbidCropGifWebp(true) //是否禁止裁剪gif和webp
         options.isDarkStatusBarBlack(true)//状态栏字体颜色是否黑色模式
+        options.setCircleDimmedLayer(isCircleDimmedLayer)
+        options.setFreeStyleCropEnabled(freeStyleCropEnabled)
+        options.withAspectRatio(photoEditCustomRatioW.toFloat(), photoEditCustomRatioH.toFloat())
+
         uCrop.withOptions(options)
         uCrop.start(fragment.requireContext(), fragment, requestCode);
     }

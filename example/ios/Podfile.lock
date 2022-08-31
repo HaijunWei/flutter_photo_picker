@@ -1,8 +1,8 @@
 PODS:
   - Flutter (1.0.0)
-  - HXPhotoPicker (3.1.9):
-    - HXPhotoPicker/Default (= 3.1.9)
-  - HXPhotoPicker/Default (3.1.9)
+  - HXPhotoPicker (3.3.1):
+    - HXPhotoPicker/Default (= 3.3.1)
+  - HXPhotoPicker/Default (3.3.1)
   - photo_picker (0.0.1):
     - Flutter
     - HXPhotoPicker
@@ -22,10 +22,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/photo_picker/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  HXPhotoPicker: e1816ff27f17c3926f6e83aebbb9f4b329324f0b
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  HXPhotoPicker: f1274d0c931ad8564e0f23f33fe8b6110b639bd7
   photo_picker: 23b27a8dcbd152e01790f22862ecc4948afd7083
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3

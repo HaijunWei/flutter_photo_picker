@@ -242,16 +242,9 @@ class PhotoPicker {
         details: error['details'],
       );
     } else {
+      SystemChrome.restoreSystemUIOverlays();
       return PhotoPickerResult.fromMap(
           Map<String, dynamic>.from(replyMap['result'] as Map));
     }
-  }
-
-  /// 还原状态栏颜色
-  void revertSystemUIOverlayStyle(Brightness style) {
-    SystemChannels.platform.invokeMethod<void>(
-      'SystemChrome.setSystemUIOverlayStyle',
-      {'statusBarBrightness': style.toString()},
-    );
   }
 }
