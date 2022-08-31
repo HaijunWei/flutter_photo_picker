@@ -242,7 +242,6 @@ class PhotoPicker {
         details: error['details'],
       );
     } else {
-      SystemChrome.restoreSystemUIOverlays();
       return PhotoPickerResult.fromMap(
           Map<String, dynamic>.from(replyMap['result'] as Map));
     }
