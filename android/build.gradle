@@ -46,10 +46,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // PictureSelector 基础 (必须)
-    implementation 'io.github.lucksiege:pictureselector:v3.10.6'
+    implementation 'io.github.lucksiege:pictureselector:v3.10.7'
     // 图片压缩 (按需引入)
-    implementation 'io.github.lucksiege:compress:v3.10.6'
+    implementation 'io.github.lucksiege:compress:v3.10.7'
     // 图片裁剪 (按需引入)
-    implementation 'io.github.lucksiege:ucrop:v3.10.6'
+    implementation 'io.github.lucksiege:ucrop:v3.10.7'
     api "com.github.bumptech.glide:glide:4.11.0"
 }

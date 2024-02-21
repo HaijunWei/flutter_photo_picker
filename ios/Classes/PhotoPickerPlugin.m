@@ -47,7 +47,7 @@
         }
     }
     if (options.allowEdit != nil) { manager.configuration.photoCanEdit = options.allowEdit.boolValue; }
-    if (options.singleJumpEdit != nil) { manager.configuration.singleJumpEdit = options.singleJumpEdit.boolValue; }
+    if (options.singleJumpEdit != nil) { manager.configuration.singleJumpEdit =  options.allowEdit.boolValue && options.singleJumpEdit.boolValue; }
     if (options.isRoundCliping != nil) {
         if (options.isRoundCliping.boolValue) {
             manager.configuration.photoEditConfigur.isRoundCliping = YES;
@@ -85,7 +85,16 @@
         [model requestImageDataStartRequestICloud:nil progressHandler:nil success:^(NSData * _Nullable imageData, UIImageOrientation orientation, HXPhotoModel * _Nullable model, NSDictionary * _Nullable info) {
             if (model.subType == HXPhotoModelMediaSubTypePhoto) {
                 NSString *tempDir = NSTemporaryDirectory();
-                NSString *filename = [NSString stringWithFormat:@"photo_picker_%@", [[NSUUID UUID] UUIDString]];
+                NSString *fileType = @"png";
+                NSString *type = info[@"PHImageFileUTIKey"] ?: (__bridge NSString *)kUTTypePNG;
+                if ([type isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
+                    fileType = @"gif";
+                } else if ([type isEqualToString:(__bridge NSString *)kUTTypeJPEG]) {
+                    fileType = @"jpg";
+                } else if (![type isEqualToString:(__bridge NSString *)kUTTypePNG]) {
+                    imageData = UIImagePNGRepresentation([[UIImage alloc] initWithData:imageData]);
+                }
+                NSString *filename = [NSString stringWithFormat:@"photo_picker_%@.%@", [[NSUUID UUID] UUIDString], fileType];
                 NSString *filePath = [tempDir stringByAppendingPathComponent:filename];
                 [[NSFileManager defaultManager] createFileAtPath:filePath contents:imageData attributes:nil];
                 HJPhotoAsset *resultAsset = [HJPhotoAsset new];

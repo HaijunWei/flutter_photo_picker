@@ -62,6 +62,6 @@ class UCropEngine(private val isCircleDimmedLayer: Boolean,
         options.withAspectRatio(photoEditCustomRatioW.toFloat(), photoEditCustomRatioH.toFloat())
 
         uCrop.withOptions(options)
-        uCrop.start(fragment.requireContext(), fragment, requestCode);
+        uCrop.start(fragment.requireActivity(), fragment, requestCode);
     }
 }

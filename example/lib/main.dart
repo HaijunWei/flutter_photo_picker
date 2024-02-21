@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   PhotoPickerType type = PhotoPickerType.all;
 
   //最大图片数
-  int maxAssetsCount = 9;
+  int maxAssetsCount = 1;
 
   //是否可以编辑资源
   bool allowEdit = true;
@@ -32,10 +32,10 @@ class _MyAppState extends State<MyApp> {
   bool isRoundCliping = false;
 
   /// 编辑 - 自定义剪裁比例，宽度
-  int photoEditCustomRatioW = 0;
+  int photoEditCustomRatioW = 16;
 
   /// 编辑 - 自定义剪裁比例，高度
-  int photoEditCustomRatioH = 0;
+  int photoEditCustomRatioH = 9;
 
   /// 列表每行显示个数
   int imageSpanCount = 4;
